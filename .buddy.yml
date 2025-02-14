@@ -1,0 +1,34 @@
+version: 2.0
+
+pipelines:
+  default:
+    - name: Install dependencies
+      action:
+        type: 'npm'
+        name: 'Install'
+        arguments: 'install'
+
+    - name: Run Tests
+      action:
+        type: 'npm'
+        name: 'Test'
+        arguments: 'test'
+
+    - name: Build Project
+      action:
+        type: 'npm'
+        name: 'Build'
+        arguments: 'run build'  # Customize if you have a build script defined in package.json
+
+    - name: Deploy to Production
+      action:
+        type: 'ssh'
+        name: 'Deploy'
+        arguments:
+          host: 'localhost'
+          username: 'sarohi'
+          password: 'sarohi'
+          path: '/Home/nodejs-api/Nodejs.api/Buddy/deploy'
+          script: |
+            npm install
+            npm run start
